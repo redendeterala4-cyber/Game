@@ -1,0 +1,17 @@
+{
+  "name": "integer-quest-backend",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Node.js API for Integer Quest Grade 7 ARAL game",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js",
+    "reset-password": "node reset-password.js"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.21.2",
+    "mongodb": "^7.9.0"
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "name": "Integer Quest - Grade 7 ARAL",
+  "short_name": "Integer Quest",
+  "description": "Offline numeracy game for Grade 7 ARAL learners",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#f5f6fc",
+  "theme_color": "#1e1b4b",
+  "icons": []
+}

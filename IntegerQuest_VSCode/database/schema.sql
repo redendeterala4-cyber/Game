@@ -1,0 +1,11 @@
+-- Active: 1758553427548@@127.0.0.1@3306
+CREATE TABLE IF NOT EXISTS sessions (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  player_name TEXT NOT NULL,
+  mode TEXT NOT NULL CHECK(mode IN ('Individual','Team')),
+  topic TEXT NOT NULL,
+  difficulty TEXT NOT NULL,
+  score INTEGER NOT NULL,
+  total_questions INTEGER NOT NULL,
+  created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP
+);

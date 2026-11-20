@@ -1,0 +1,558 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#1e1b4b">
+  <meta name="description" content="ARAL Math Grade 7 game: fractions, decimals, shapes and area, speed, outcomes and integers">
+  <title>Mathinik Quest | Grade 7 ARAL</title>
+  <link rel="manifest" href="/manifest.webmanifest">
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <div class="brand">
+        <span class="brand-icon" aria-hidden="true">±</span>
+        <span class="brand-text">MATHINIK QUEST<small>GRADE 7 • ARAL PROGRAM</small></span>
+      </div>
+      <div class="top-actions">
+        <button id="musicBtn" class="icon-btn" aria-label="Background music" aria-pressed="false" title="Background music">🎵</button>
+        <button id="sfxBtn" class="icon-btn" aria-label="Sound effects" aria-pressed="true" title="Sound effects">🔊</button>
+        <span id="connection" class="status">Checking…</span>
+        <div id="userChip" class="user-chip hidden">
+          <button id="profileChip" type="button" class="profile-chip" title="Edit profile" aria-label="Edit profile">
+            <span id="userBadge" class="user-badge" aria-hidden="true">🎒</span>
+            <span class="user-meta"><b id="userName">Name</b><small id="userRole">Student</small></span>
+          </button>
+          <button id="accountBtn" class="icon-btn" title="My account" aria-label="My account">⚙️</button>
+          <button id="logoutBtn" class="icon-btn" title="Log out" aria-label="Log out">⏻</button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <!-- LOG IN (first screen for everyone) -->
+    <section id="login" class="screen active">
+      <div class="login-wrap">
+        <div class="login-hero">
+          <p class="eyebrow">WELCOME TO</p>
+          <h1>Mathinik<br><span>Quest</span></h1>
+          <p class="intro">Grade 7 ARAL math adventure. Log in to play, to follow your class, or to manage the school's accounts.</p>
+          <div class="login-roles" aria-hidden="true">
+            <span><b>🎒</b>Students play and track their progress</span>
+            <span><b>🍎</b>Teachers follow their own class</span>
+            <span><b>🛡️</b>Admins manage every account</span>
+          </div>
+        </div>
+        <div class="login-card">
+          <h2 id="loginTitle">Student log in</h2>
+          <div class="role-tabs" role="tablist" aria-label="I am a">
+            <button type="button" class="role-tab chosen" data-role="student" role="tab" aria-selected="true"><span aria-hidden="true">🎒</span>Student</button>
+            <button type="button" class="role-tab" data-role="teacher" role="tab" aria-selected="false"><span aria-hidden="true">🍎</span>Teacher</button>
+            <button type="button" class="role-tab" data-role="admin" role="tab" aria-selected="false"><span aria-hidden="true">🛡️</span>Admin</button>
+          </div>
+
+          <!-- Log in -->
+          <form id="loginForm" class="auth-form" novalidate>
+            <label class="field-label" for="loginUser">Username</label>
+            <input id="loginUser" autocomplete="username" autocapitalize="none" spellcheck="false" maxlength="30">
+            <label class="field-label" for="loginPass">Password</label>
+            <div class="pass-row">
+              <input id="loginPass" type="password" autocomplete="current-password" maxlength="100">
+              <button type="button" id="togglePass" class="mini-btn">Show</button>
+            </div>
+            <div class="forgot-row"><button type="button" class="link-btn" data-auth="forgot">Forgot password?</button></div>
+            <p id="loginError" class="form-msg" role="alert"></p>
+            <button id="loginBtn" type="submit" class="btn primary full big">LOG IN</button>
+            <p id="loginHelp" class="muted tiny login-help">Ask your teacher for your username and password.</p>
+            <p id="toRegister" class="auth-switch">New here? <button type="button" class="link-btn" data-auth="register">Create an account</button></p>
+          </form>
+
+          <!-- Create an account -->
+          <form id="registerForm" class="auth-form hidden" novalidate autocomplete="off">
+            <p id="regIntro" class="muted tiny reg-intro"></p>
+            <div id="regFields">
+              <label class="field-label" for="regName">Full name</label>
+              <input id="regName" maxlength="60" autocomplete="name">
+              <label class="field-label" for="regUser">Choose a username</label>
+              <input id="regUser" maxlength="30" autocapitalize="none" spellcheck="false" placeholder="e.g. ana.reyes" autocomplete="username">
+              <div class="two-col">
+                <div><label class="field-label" for="regPass">Password</label><input id="regPass" type="password" maxlength="100" placeholder="6+ characters" autocomplete="new-password"></div>
+                <div><label class="field-label" for="regConfirm">Repeat password</label><input id="regConfirm" type="password" maxlength="100" autocomplete="new-password"></div>
+              </div>
+              <div id="regCodeWrap">
+                <label class="field-label" for="regCode">Class code from your teacher</label>
+                <input id="regCode" maxlength="12" autocapitalize="characters" spellcheck="false" placeholder="e.g. K7M2QX" class="code-input">
+              </div>
+              <label class="field-label" for="regSection">Grade 7 section</label>
+              <select id="regSection" class="section-select" data-sections></select>
+              <p id="regMsg" class="form-msg" role="alert"></p>
+              <button id="regBtn" type="submit" class="btn primary full big">CREATE ACCOUNT</button>
+            </div>
+            <p class="auth-switch">Already have an account? <button type="button" class="link-btn" data-auth="login">Log in</button></p>
+          </form>
+
+          <!-- Forgot password -->
+          <form id="forgotForm" class="auth-form hidden" novalidate>
+            <p id="forgotIntro" class="muted tiny reg-intro"></p>
+            <label class="field-label" for="forgotUser">Your username</label>
+            <input id="forgotUser" maxlength="30" autocapitalize="none" spellcheck="false" autocomplete="username">
+            <p id="forgotMsg" class="form-msg" role="alert"></p>
+            <button id="forgotBtn" type="submit" class="btn primary full big">ASK FOR A NEW PASSWORD</button>
+            <p class="auth-switch"><button type="button" class="link-btn" data-auth="login">← Back to log in</button></p>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <!-- HOME (student dashboard) -->
+    <section id="home" class="screen">
+      <div class="hero">
+        <div class="hero-glow" aria-hidden="true"></div>
+        <p class="eyebrow">THINK • SOLVE • LEVEL UP</p>
+        <h1>Your math<br><span>adventure starts here.</span></h1>
+        <p class="intro">Practice the ARAL Math Grade 7 skills: fractions, decimals, shapes and area, speed, outcomes, and integers.</p>
+
+        <div class="numberline" aria-hidden="true">
+          <div class="nl-track"></div>
+          <div class="nl-ticks">
+            <span>−4</span><span>−3</span><span>−2</span><span>−1</span><span class="zero">0</span><span>1</span><span>2</span><span>3</span><span>4</span>
+          </div>
+          <div class="nl-hopper"></div>
+        </div>
+
+        <div class="hero-form">
+          <label class="field-label">Choose your hero</label>
+          <div class="avatars">
+            <button data-avatar="🦸" aria-label="Superhero">🦸</button><button data-avatar="🧝" aria-label="Elf">🧝</button><button data-avatar="🥷" aria-label="Ninja">🥷</button><button data-avatar="🧑‍🚀" aria-label="Astronaut">🧑‍🚀</button><button data-avatar="🤖" aria-label="Robot">🤖</button><button data-avatar="🦊" aria-label="Fox">🦊</button>
+          </div>
+          <p class="welcome">Welcome, <b id="welcomeName">Learner</b>! Ready for today's quest?</p>
+          <input id="playerName" type="hidden" value="Learner">
+          <button id="startSetup" class="btn primary full big">START ADVENTURE <span aria-hidden="true">→</span></button>
+        </div>
+      </div>
+
+      <div class="topic-strip">
+        <div class="topic-pill fra"><span class="topic-sym">🏞️ 2/3 + 1/4</span><b>Fraction Falls</b><small>Fractions and mixed numbers: add, subtract, multiply, divide</small></div>
+        <div class="topic-pill dec"><span class="topic-sym">⚓ 4.8 ÷ 0.06</span><b>Decimal Docks</b><small>Decimals: all four operations, ÷ 0.1 and ÷ 10</small></div>
+        <div class="topic-pill geo"><span class="topic-sym">🏔️ SA = 6s²</span><b>Shape Summit</b><small>Solid figures, composite area, surface area</small></div>
+        <div class="topic-pill spd"><span class="topic-sym">🛣️ S = D ÷ T</span><b>Speed Highway</b><small>Speed, distance and time</small></div>
+        <div class="topic-pill out"><span class="topic-sym">🎡 2 × 3 = 6</span><b>Chance Carnival</b><small>Listing outcomes, tables, tree diagrams</small></div>
+        <div class="topic-pill int"><span class="topic-sym">🏝️ (−3) + 8</span><b>Integer Island</b><small>Integers: add, subtract, multiply, divide</small></div>
+      </div>
+
+      <div class="home-grid">
+        <button class="feature-card" data-screen="puzzle">
+          <span class="fc-icon" aria-hidden="true">🧩</span>
+          <span class="fc-body"><b>Number Trail</b><small>Link tiles to hit the target</small></span>
+          <span class="fc-arrow" aria-hidden="true">›</span>
+        </button>
+        <button class="feature-card" data-screen="setup">
+          <span class="fc-icon" aria-hidden="true">🎯</span>
+          <span class="fc-body"><b>Free Practice</b><small>Any topic, solo or team</small></span>
+          <span class="fc-arrow" aria-hidden="true">›</span>
+        </button>
+        <button class="feature-card" data-screen="assessment">
+          <span class="fc-icon" aria-hidden="true">📈</span>
+          <span class="fc-body"><b>Learning Check</b><small>Pre-test and post-test</small></span>
+          <span class="fc-arrow" aria-hidden="true">›</span>
+        </button>
+        <button class="feature-card" data-screen="myprogress">
+          <span class="fc-icon" aria-hidden="true">🏅</span>
+          <span class="fc-body"><b>My Progress</b><small>Your games, tests and stars</small></span>
+          <span class="fc-arrow" aria-hidden="true">›</span>
+        </button>
+      </div>
+      <p class="offline-note"><span aria-hidden="true">✓</span> Practice works offline after your first visit. Scores save to your account when you're connected.</p>
+    </section>
+
+    <!-- QUEST MAP -->
+    <section id="map" class="screen">
+      <button class="back" data-screen="home">← Home</button>
+      <h2>Quest Map</h2>
+      <p class="muted">Score 75% or more to clear a stage and unlock the next. Defeat the boss to open a new land.</p>
+      <div id="mapHud" class="map-hud"></div>
+      <div id="mapLands"></div>
+    </section>
+
+    <!-- STAGE STORY -->
+    <section id="story" class="screen">
+      <button class="back" data-screen="map">← Quest Map</button>
+      <div id="storyCard" class="story-card"></div>
+      <button id="beginBattle" class="btn primary full big">CONTINUE TO QUICK REVIEW <span aria-hidden="true">📖</span></button>
+    </section>
+
+    <!-- QUICK REVIEW (before every Adventure battle; filled by renderLesson in app.js) -->
+    <section id="lesson" class="screen">
+      <button class="back" data-screen="story">← Story</button>
+      <div id="lessonCard" class="lesson-card"></div>
+      <button id="startFight" class="btn primary full big">I'M READY — START BATTLE <span aria-hidden="true">⚔️</span></button>
+    </section>
+
+    <!-- NUMBER TRAIL (tile-linking puzzle) -->
+    <section id="puzzle" class="screen">
+      <button class="back" data-screen="home">← Home</button>
+
+      <div id="trailIntro">
+        <h2>Number Trail</h2>
+        <p class="muted">Link neighbouring number tiles so they add up to the target. Longer trails score more!</p>
+        <div class="step-card how">
+          <b>How to play</b>
+          <ol>
+            <li>Tap tiles that touch each other (side, up, down or diagonal) to build a trail.</li>
+            <li>When your trail adds up to the <b>target</b>, tap <b>SUBMIT</b>. The tiles vanish and new ones drop in.</li>
+            <li>Gold tiles double your points. Clear ⚡ storm tiles before their countdown reaches 0, or you lose a heart.</li>
+            <li>Every 250 points you level up and win back a heart. Lose all 3 hearts and the game ends.</li>
+          </ol>
+        </div>
+        <div class="step-card">
+          <div class="step-head"><span class="step-num">1</span><span class="field-label">Choose a level</span></div>
+          <div class="chips">
+            <button data-trail="Easy">Easy · 1 to 9</button>
+            <button class="chosen" data-trail="Average">Average · −9 to 9</button>
+            <button data-trail="Difficult">Difficult · longer trails</button>
+          </div>
+          <p id="trailBest" class="muted tiny"></p>
+        </div>
+        <button id="trailStart" class="btn primary full big">START TRAIL <span aria-hidden="true">🧩</span></button>
+      </div>
+
+      <div id="trailGame" class="hidden">
+        <div class="trail-hud">
+          <span id="trHero" class="tr-hero" aria-hidden="true">🦸</span>
+          <span id="trHearts" class="hearts" aria-label="Hearts">❤️❤️❤️</span>
+          <span class="tr-stat">LV <b id="trLevel">1</b></span>
+          <span class="tr-stat">⭐ <b id="trScore">0</b></span>
+        </div>
+        <div class="target-bar"><span>TARGET</span><b id="trTarget">0</b></div>
+        <div id="trBoard" class="board"></div>
+        <div id="trExpr" class="expr">Tap tiles to build a trail</div>
+        <div id="trMsg" class="tr-msg" aria-live="polite"></div>
+        <div class="tr-actions">
+          <button id="trClear" class="btn secondary">CLEAR</button>
+          <button id="trSubmit" class="btn primary" disabled>SUBMIT ✓</button>
+        </div>
+        <div class="tr-actions small">
+          <button id="trHint" class="mini-btn">💡 Hint (3)</button>
+          <button id="trEnd" class="mini-btn">End game</button>
+        </div>
+      </div>
+
+      <div id="trailOver" class="hidden centered">
+        <div class="trophy-wrap"><div class="trophy" aria-hidden="true">🧩</div></div>
+        <p class="eyebrow">TRAIL COMPLETE</p>
+        <h2 id="trOverTitle">Great run!</h2>
+        <div id="trOverScore" class="big-score">0</div>
+        <p id="trOverDetail" class="muted"></p>
+        <div class="result-actions">
+          <button id="trAgain" class="btn primary full big">PLAY AGAIN</button>
+          <button class="btn secondary full" data-screen="home">BACK TO HOME</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- SETUP -->
+    <section id="setup" class="screen">
+      <button class="back" data-screen="home">← Home</button>
+      <h2>Free practice</h2>
+      <p class="muted">Choose a mode, topic, and difficulty.</p>
+
+      <div class="step-card">
+        <div class="step-head"><span class="step-num">1</span><span class="field-label">Game mode</span></div>
+        <div class="segmented">
+          <button class="chosen" data-mode="Individual"><span class="seg-icon" aria-hidden="true">🧑</span>Individual</button>
+          <button data-mode="Team"><span class="seg-icon" aria-hidden="true">👥</span>Team</button>
+        </div>
+        <div id="teamNames" class="hidden team-names">
+          <div class="team-grid">
+            <div><label class="field-label" for="team1">Player 1</label><input id="team1" value="Player 1" maxlength="35"></div>
+            <div><label class="field-label" for="team2">Player 2</label><input id="team2" value="Player 2" maxlength="35"></div>
+          </div>
+          <p class="muted tiny">Team mode is pass-and-play on one device. Take turns answering.</p>
+        </div>
+      </div>
+
+      <div class="step-card">
+        <div class="step-head"><span class="step-num">2</span><span class="field-label">Topic</span></div>
+        <div class="chips">
+          <button class="chosen" data-topic="Mixed">🎲 Mixed</button>
+          <button data-topic="Fractions">½ Fractions</button>
+          <button data-topic="Decimals">0.5 Decimals</button>
+          <button data-topic="Geometry">📐 Shapes &amp; Area</button>
+          <button data-topic="Speed">🚌 Speed &amp; Time</button>
+          <button data-topic="Outcomes">🎲 Outcomes</button>
+          <button data-topic="Integers">± Integers</button>
+        </div>
+      </div>
+
+      <div class="step-card">
+        <div class="step-head"><span class="step-num">3</span><span class="field-label">Difficulty</span></div>
+        <div class="chips levels">
+          <button class="chosen" data-level="Easy"><i class="dots d1"></i>Easy</button>
+          <button data-level="Average"><i class="dots d2"></i>Average</button>
+          <button data-level="Difficult"><i class="dots d3"></i>Difficult</button>
+          <button data-level="All levels">All levels</button>
+        </div>
+      </div>
+
+      <button id="play" class="btn primary full big">LET'S PLAY <span aria-hidden="true">🚀</span></button>
+    </section>
+
+    <!-- GAME -->
+    <section id="game" class="screen">
+      <div class="hud">
+        <div class="game-head">
+          <button id="exitGame" class="back" data-screen="home">✕ Exit</button>
+          <span id="progressText">QUESTION 1</span>
+        </div>
+        <div class="progress"><span id="progressBar"></span></div>
+        <div class="scoreline"><span id="turnLabel">Individual</span><span id="scoreLabel">0 points</span></div>
+      </div>
+      <div id="battle" class="battle hidden" aria-live="polite">
+        <div class="fighter"><span id="heroIcon" class="f-icon">🦸</span><span id="heroName" class="f-name">Hero</span><span id="heroHearts" class="hearts">❤️❤️❤️</span></div>
+        <span class="vs">VS</span>
+        <div class="fighter"><span id="foeIcon" class="f-icon">🦀</span><span id="foeName" class="f-name">Foe</span><span class="hp"><span id="foeHp"></span></span></div>
+      </div>
+      <article class="question-card">
+        <span id="topicTag" class="tag">INTEGERS</span>
+        <h2 id="questionText">Loading question…</h2>
+      </article>
+      <div id="answers" class="answers"></div>
+      <div id="feedback" class="feedback hidden" aria-live="polite"></div>
+      <button id="checkAnswer" class="btn primary full big" disabled>CHECK ANSWER</button>
+    </section>
+
+    <!-- RESULT -->
+    <section id="result" class="screen centered">
+      <div class="trophy-wrap"><div id="resultIcon" class="trophy" aria-hidden="true">🏆</div></div>
+      <p id="resultEyebrow" class="eyebrow">CHALLENGE COMPLETE</p>
+      <h2 id="resultTitle">Great effort!</h2>
+      <p id="resultSummary" class="intro"></p>
+      <div id="resultScore" class="big-score">0</div>
+      <p id="resultDetail" class="muted"></p>
+      <div id="advResult"></div>
+      <div id="reviewPanel"></div>
+      <div class="result-actions">
+        <button id="toMap" class="btn primary full big hidden">CONTINUE ADVENTURE</button>
+        <button id="playAgain" class="btn primary full big">PLAY AGAIN</button>
+        <button class="btn secondary full" data-screen="home">BACK TO HOME</button>
+      </div>
+    </section>
+
+    <!-- ASSESSMENT -->
+    <section id="assessment" class="screen">
+      <button class="back" data-screen="home">← Home</button>
+      <h2>Learning check</h2>
+      <p class="muted">Take a short check before and after practice to see your progress.</p>
+      <div class="test-grid">
+        <div class="info-card test-card pre">
+          <span class="test-badge">STEP 1</span>
+          <b>Before practice</b>
+          <p>Try the pre-test without hints. 10 mixed questions.</p>
+          <button class="btn primary full" data-test="Pre-test">START PRE-TEST</button>
+        </div>
+        <div class="info-card test-card post">
+          <span class="test-badge">STEP 2</span>
+          <b>After practice</b>
+          <p>Take the post-test after completing game challenges.</p>
+          <button class="btn secondary full" data-test="Post-test">START POST-TEST</button>
+        </div>
+      </div>
+      <p id="testScores" class="score-banner"></p>
+    </section>
+
+    <!-- MY PROGRESS (student) -->
+    <section id="myprogress" class="screen">
+      <button class="back" data-screen="home">← Home</button>
+      <h2>My progress</h2>
+      <p class="muted">Your games are saved to your account, so they follow you to any device.</p>
+      <div id="myStats" class="stats stats-4"></div>
+      <div class="info-card"><b>Learning check</b><div id="myTests" class="test-compare"></div></div>
+      <div class="info-card">
+        <div class="card-head"><b>Recent games</b><button id="refreshMine" class="mini-btn">↻ Refresh</button></div>
+        <div id="myGames" class="session-list">Loading…</div>
+      </div>
+    </section>
+
+    <!-- TEACHER DASHBOARD -->
+    <section id="teacher" class="screen">
+      <div class="dash-head">
+        <div><p class="eyebrow dash-eyebrow">🍎 TEACHER DASHBOARD</p><h2 id="teacherTitle">My class</h2><p class="muted">See how each of your students is doing and manage their accounts.</p></div>
+        <button id="refreshTeacher" class="mini-btn">↻ Refresh</button>
+      </div>
+      <div class="stats stats-4">
+        <div class="stat"><small>Students</small><b id="tStudents">—</b></div>
+        <div class="stat"><small>Games played</small><b id="totalSessions">—</b></div>
+        <div class="stat accent"><small>Class average</small><b id="averageScore">—</b></div>
+        <div class="stat good"><small>Pre → post growth</small><b id="tGrowth">—</b></div>
+      </div>
+      <div class="info-card class-code-card">
+        <div><b>Class code</b><p class="muted tiny">Students type this code when they create their own account, and they join your class.</p></div>
+        <div class="code-box"><span id="tClassCode">——————</span><button id="newCodeBtn" class="mini-btn" title="Make a new code (the old one stops working)">↻ New code</button></div>
+      </div>
+      <div id="tRequestsCard" class="info-card help-card hidden">
+        <div class="card-head"><b>🔑 Password help</b><span id="tReqCount" class="muted tiny"></span></div>
+        <p class="muted tiny">These students tapped "Forgot password?". Set a new password, then tell them what it is.</p>
+        <div id="tRequests" class="request-list"></div>
+      </div>
+      <div class="info-card">
+        <div class="card-head"><b>My students</b><span id="tCount" class="muted tiny"></span></div>
+        <p id="tMsg" class="form-msg"></p>
+        <div class="table-wrap"><table id="studentTable" class="data-table"></table></div>
+      </div>
+      <details class="info-card form-card">
+        <summary><b>➕ Add a student</b></summary>
+        <form id="addStudentForm" class="form-grid" autocomplete="off">
+          <label>Full name<input id="nsName" maxlength="60" required></label>
+          <label>Username<input id="nsUser" maxlength="30" autocapitalize="none" spellcheck="false" placeholder="e.g. ana.reyes" required></label>
+          <label>Password<input id="nsPass" type="text" maxlength="100" placeholder="at least 6 characters" required></label>
+          <label>Section<select id="nsSection" class="section-select" data-sections></select></label>
+          <button type="submit" class="btn primary">CREATE STUDENT ACCOUNT</button>
+          <p id="nsMsg" class="form-msg"></p>
+        </form>
+      </details>
+      <div class="info-card">
+        <b>Recent games in my class</b>
+        <div id="sessionList" class="session-list">Loading…</div>
+      </div>
+    </section>
+
+    <!-- ADMIN DASHBOARD -->
+    <section id="admin" class="screen">
+      <div class="dash-head">
+        <div><p class="eyebrow dash-eyebrow">🛡️ ADMIN DASHBOARD</p><h2>School overview</h2><p class="muted">Manage every account and see results from every class.</p></div>
+        <button id="refreshAdmin" class="mini-btn">↻ Refresh</button>
+      </div>
+      <div class="stats stats-4">
+        <div class="stat"><small>Teachers</small><b id="aTeachers">—</b></div>
+        <div class="stat"><small>Students</small><b id="aStudents">—</b></div>
+        <div class="stat"><small>Games played</small><b id="aGames">—</b></div>
+        <div class="stat accent"><small>Average score</small><b id="aAverage">—</b></div>
+      </div>
+      <div id="aPendingCard" class="info-card help-card hidden">
+        <div class="card-head"><b>⏳ Teachers waiting for approval</b><span id="aPendCount" class="muted tiny"></span></div>
+        <p class="muted tiny">These teachers created their own accounts. Approve the ones you know; delete the rest.</p>
+        <div id="aPending" class="request-list"></div>
+      </div>
+      <div id="aRequestsCard" class="info-card help-card hidden">
+        <div class="card-head"><b>🔑 Password help</b><span id="aReqCount" class="muted tiny"></span></div>
+        <p class="muted tiny">These people tapped "Forgot password?". Set a new password, then tell them what it is.</p>
+        <div id="aRequests" class="request-list"></div>
+      </div>
+      <details class="info-card form-card">
+        <summary><b>➕ Create an account</b></summary>
+        <form id="newUserForm" class="form-grid" autocomplete="off">
+          <label>Role
+            <select id="nuRole"><option value="student">🎒 Student</option><option value="teacher">🍎 Teacher</option><option value="admin">🛡️ Admin</option></select>
+          </label>
+          <label>Full name<input id="nuName" maxlength="60" required></label>
+          <label>Username<input id="nuUser" maxlength="30" autocapitalize="none" spellcheck="false" required></label>
+          <label>Password<input id="nuPass" type="text" maxlength="100" placeholder="at least 6 characters" required></label>
+          <label>Section<select id="nuSection" class="section-select" data-sections></select></label>
+          <label id="nuTeacherWrap">Teacher<select id="nuTeacher"></select></label>
+          <button type="submit" class="btn primary">CREATE ACCOUNT</button>
+          <p id="nuMsg" class="form-msg"></p>
+        </form>
+      </details>
+      <div class="info-card">
+        <div class="card-head"><b>All accounts</b><span id="uCount" class="muted tiny"></span></div>
+        <div class="filter-row">
+          <div class="chips">
+            <button class="chosen" data-ufilter="all">All</button>
+            <button data-ufilter="teacher">🍎 Teachers</button>
+            <button data-ufilter="student">🎒 Students</button>
+          </div>
+          <input id="userSearch" type="search" placeholder="Search name, username or section" aria-label="Search accounts">
+        </div>
+        <p id="aMsg" class="form-msg"></p>
+        <div class="table-wrap"><table id="userTable" class="data-table"></table></div>
+      </div>
+      <div class="info-card">
+        <b>Recent games (all classes)</b>
+        <div id="adminSessions" class="session-list">Loading…</div>
+      </div>
+    </section>
+
+    <!-- MY ACCOUNT (all roles) -->
+    <section id="account" class="screen">
+      <button class="back" data-screen="home">← Back</button>
+      <h2>My account</h2>
+      <div class="info-card acct-card">
+        <div id="accountInfo"></div>
+        <button id="editProfileBtn" type="button" class="btn primary">✏️ EDIT PROFILE</button>
+      </div>
+      <form id="pwForm" class="info-card form-grid one" autocomplete="off">
+        <b>Change password</b>
+        <label>Current password<input id="pwCurrent" type="password" autocomplete="current-password" required></label>
+        <label>New password<input id="pwNew" type="password" autocomplete="new-password" placeholder="at least 6 characters" required></label>
+        <label>Repeat new password<input id="pwConfirm" type="password" autocomplete="new-password" required></label>
+        <button type="submit" class="btn primary">SAVE NEW PASSWORD</button>
+        <p id="pwMsg" class="form-msg"></p>
+      </form>
+      <button id="logoutBtn2" class="btn secondary full">LOG OUT</button>
+    </section>
+
+    <!-- EDIT PROFILE (all roles): photo, name, section -->
+    <section id="profile" class="screen">
+      <button id="profileBack" class="back" data-screen="account">← My account</button>
+      <h2 id="profileTitle">Edit profile</h2>
+      <p id="profileIntro" class="muted">Change your photo and the name others see.</p>
+      <div class="info-card pfp-card">
+        <div id="pfpPreview" class="pfp pfp-big" aria-hidden="true"></div>
+        <div class="pfp-body">
+          <b>Profile picture</b>
+          <p id="pfpNote" class="muted tiny"></p>
+          <div class="pfp-actions">
+            <label class="btn primary pfp-upload" tabindex="0">📷 Upload a photo<input id="pfpFile" type="file" accept="image/png,image/jpeg,image/webp" hidden></label>
+            <button id="pfpRemove" type="button" class="btn secondary">Remove photo</button>
+          </div>
+          <p id="pfpMsg" class="form-msg" role="alert"></p>
+        </div>
+      </div>
+      <form id="profileForm" class="info-card profile-form" autocomplete="off" novalidate>
+        <b>Profile details</b>
+        <label class="field-label" for="profName">Full name</label>
+        <input id="profName" maxlength="60" autocomplete="name">
+        <label class="field-label" for="profUser">Username</label>
+        <input id="profUser" class="readonly-input" readonly tabindex="-1">
+        <p id="profUserHint" class="muted tiny field-hint">Your username is how you log in, so it can't be changed here. Ask the admin if it needs to change.</p>
+        <div id="profSectionWrap">
+          <label class="field-label" for="profSection">Grade 7 section</label>
+          <select id="profSection" class="section-select" data-sections></select>
+        </div>
+        <div id="profSectionView" class="hidden">
+          <label class="field-label" for="profSectionText">Grade 7 section</label>
+          <input id="profSectionText" class="readonly-input" readonly tabindex="-1">
+          <p class="muted tiny field-hint">Your section is set by your teacher. Ask them if it needs to change.</p>
+        </div>
+        <p id="profMsg" class="form-msg" role="alert"></p>
+        <button id="profSave" type="submit" class="btn primary full big">SAVE PROFILE</button>
+      </form>
+    </section>
+  </main>
+
+  <footer>MATHINIK QUEST • Learn together, grow together.</footer>
+
+  <!-- Full-screen strike in Adventure mode: hero on right answers, monster on wrong answers (filled by openStrike in app.js) -->
+  <div id="strike" class="strike hidden" aria-hidden="true"></div>
+
+  <!-- First-visit sound choice -->
+  <div id="soundModal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="soundTitle">
+    <div class="modal-card">
+      <div class="modal-icon" aria-hidden="true">🎧</div>
+      <h2 id="soundTitle">How do you want to play?</h2>
+      <p class="muted">Mathinik Quest has its own background music. You can change this anytime with the 🎵 and 🔊 buttons at the top.</p>
+      <button id="withMusic" class="btn primary full big">🎵 PLAY WITH MUSIC</button>
+      <button id="noMusic" class="btn secondary full">🔇 PLAY WITHOUT MUSIC</button>
+      <label class="check"><input type="checkbox" id="sfxCheck" checked> Sound effects (taps, hits, wins)</label>
+    </div>
+  </div>
+  <script src="/sound.js"></script>
+  <script src="/variants.js"></script>
+  <script src="/auth.js"></script>
+  <script src="/app.js"></script>
+  <script src="/trail.js"></script>
+</body>
+</html>
