@@ -772,3 +772,86 @@ select.assign{padding:6px 8px;font-size:12px;border-radius:10px;max-width:160px}
 @media (max-width:370px){
   .status{display:none}
 }
+
+/* ===== Mathinik Quest 2026: unified visual refresh ===== */
+:root{--night:#201747;--night-2:#392477;--violet:#7535db;--violet-soft:#f1eaff;--gold:#ffc84a;--gold-deep:#d99114;--ink:#251b46;--muted:#68647d;--line:#e7e1f3;--bg:#f8f6ff;--card:#fff;--radius:22px;--shadow:0 10px 35px rgba(42,25,91,.08),0 2px 8px rgba(42,25,91,.04)}
+body{background:radial-gradient(ellipse at 12% 15%,#eee5ff 0,transparent 35%),radial-gradient(ellipse at 90% 85%,#f3eaff 0,transparent 32%),#f9f7ff;background-attachment:fixed}
+.topbar{background:linear-gradient(110deg,#211542,#30205e);border-bottom:1px solid #66519b;box-shadow:0 6px 24px rgba(29,18,68,.14)}
+.topbar-inner{max-width:1200px;height:76px;padding:0 26px;gap:14px}
+.brand-icon{background:linear-gradient(135deg,#ffd76c,#ffb42b);border-radius:14px;box-shadow:0 3px 0 #d68d17}
+.brand-text{font-size:17px;letter-spacing:.25px}.brand-text small{font-size:10px;letter-spacing:1.1px}
+.container{max-width:1120px;padding:34px 26px 64px;min-height:calc(100vh - 140px)}
+.screen.active{animation:enter .22s ease-out}
+h2{font-size:clamp(26px,3vw,34px);letter-spacing:-.7px}
+input,.section-select{border:1.5px solid #ded7ec;background:#fff;box-shadow:0 1px 2px rgba(42,25,91,.025);min-height:50px}
+input:hover,.section-select:hover{border-color:#c4b5e3}
+input:focus,.section-select:focus{border-color:var(--violet);box-shadow:0 0 0 4px rgba(117,53,219,.11)}
+button:focus-visible,input:focus-visible,select:focus-visible,summary:focus-visible{outline:3px solid #ad85ff;outline-offset:3px}
+.btn{min-height:46px;border-radius:14px;transition:transform .16s,box-shadow .16s,filter .16s}
+.btn:hover:not(:disabled){transform:translateY(-2px)}
+.btn.primary{background:linear-gradient(120deg,#8b3fe5,#6730c9);color:#fff;box-shadow:0 5px 0 #4f239d,0 10px 18px rgba(117,53,219,.17)}
+.btn.primary:active:not(:disabled){transform:translateY(2px);box-shadow:0 2px 0 #4f239d}
+.btn.secondary{background:#fff;border:1.5px solid #d7c7f5;color:#5c2db2;box-shadow:0 3px 0 #e8def9}
+.mini-btn{background:#f3edff;border:1px solid #d7c7f5;color:#6231b4;min-height:34px}
+.back{padding:10px 2px;margin-bottom:10px}
+/* Login: generous split layout and stronger hierarchy */
+#login .login-wrap{max-width:1040px;margin:18px auto 30px;grid-template-columns:1.05fr 1fr;gap:24px;align-items:stretch}
+#login .login-hero{min-height:570px;padding:48px 42px;background:radial-gradient(circle at 85% 90%,rgba(165,105,255,.32),transparent 40%),linear-gradient(145deg,#24144c,#40218a 78%,#6335c8);box-shadow:0 22px 48px rgba(48,25,111,.18)}
+#login .login-hero::before{content:'✦';position:absolute;right:35px;top:38px;font-size:50px;color:#ffce58;opacity:.9}
+#login .login-hero::after{content:'✦  ★  ✧';right:16px;bottom:10px;font-size:75px;letter-spacing:8px;color:rgba(255,210,110,.16)}
+#login .login-hero h1{font-size:clamp(48px,5vw,76px);letter-spacing:-2.5px;line-height:1.02;margin:20px 0}
+#login .login-hero h1 span{color:#fbc74f}
+#login .login-hero .intro{max-width:400px;font-size:16px;line-height:1.75;color:#e7dfff}
+#login .login-roles{margin-top:38px;gap:12px}
+#login .login-roles span{background:rgba(255,255,255,.09);border:1px solid rgba(255,255,255,.12);padding:15px 16px;border-radius:16px;font-size:14px}
+#login .login-card{padding:38px 34px;background:rgba(255,255,255,.96);border:1px solid #fff;box-shadow:0 22px 55px rgba(43,28,92,.11);justify-content:center}
+#login .login-card h2{font-size:30px;margin:0 0 12px}
+#login .role-tabs{gap:10px;margin:8px 0 12px}
+#login .role-tab{min-height:96px;border:1.5px solid #e0d9ee;border-radius:16px;background:#fbfaff;box-shadow:0 3px 0 #ece7f5}
+#login .role-tab span{font-size:26px}
+#login .role-tab.chosen{background:#f0e6ff;color:#4f229d;border-color:#8c42ec;box-shadow:0 0 0 2px rgba(140,66,236,.1),0 4px 0 #d4b6ff}
+#login .field-label{margin-top:16px}
+#login .auth-form .btn.primary{margin-top:12px}
+#login .pass-row .mini-btn{min-height:44px}
+/* Shared content cards */
+.info-card,.step-card,.stat,.feature-card,.topic-pill,.land,.hud,.map-hud,.lesson-card{border:1px solid #eee8f7;box-shadow:var(--shadow)}
+.info-card,.step-card{padding:24px;border-radius:22px}
+.feature-card{padding:22px;min-height:100px;border-radius:20px}
+.feature-card:hover,.topic-pill:hover{border-color:#cdb6f5;box-shadow:0 14px 32px rgba(75,41,137,.12)}
+.fc-icon{width:56px;height:56px;border-radius:16px;font-size:27px;background:#f1e8ff}
+.fc-body b{font-size:16px}.fc-body small{font-size:13px;line-height:1.5}
+.home-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin-top:20px}
+.topic-strip{grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin-top:22px}
+.topic-pill{min-height:152px;padding:20px}
+.hero{padding:48px 44px;border-radius:28px;background:radial-gradient(circle at 85% 20%,rgba(176,118,255,.25),transparent 35%),linear-gradient(135deg,#26144e,#48238f)}
+.hero h1{font-size:clamp(38px,5vw,64px)}
+/* Adventure / assessment / results */
+#map,#story,#lesson,#puzzle,#setup,#game,#result,#assessment,#myprogress{max-width:880px;margin-inline:auto}
+.question-card{min-height:210px;padding:34px;border-radius:24px;background:linear-gradient(125deg,#281753,#4d2798)}
+.question-card h2{font-size:clamp(23px,3.2vw,36px);line-height:1.35}
+.answers{gap:14px}
+.answers button{min-height:70px;border-radius:18px}
+.progress{height:12px;background:#ede4fb}
+.progress span{background:linear-gradient(90deg,#7840d9,#b86cf1)}
+#result .big-score,#trailOver .big-score{color:#6430b5}
+/* Dashboards: readable statistics and tables */
+#teacher,#admin{max-width:1100px;margin:auto}
+.dash-head{margin-bottom:24px}
+.stats{gap:16px}
+.stat{border-radius:20px;padding:22px;background:#fff}
+.stat b{letter-spacing:-1px}
+.data-table{width:100%}
+.data-table th{background:#f5f0ff;color:#4d2a89;font-size:12px;text-transform:uppercase;letter-spacing:.5px}
+.data-table td,.data-table th{padding:14px 12px}
+.table-wrap{overflow-x:auto;scrollbar-width:thin}
+.info-card + .info-card{margin-top:18px}
+/* Controls and feedback */
+.chips button,.segmented button{border-radius:14px;min-height:48px}
+.chips .chosen,.segmented .chosen{background:#52259c;border-color:#52259c}
+.feedback,.form-msg{line-height:1.5}
+.modal-card{border-radius:26px}
+footer{color:#82789d}
+@media(max-width:900px){.container{padding:26px 20px 50px}#login .login-wrap{grid-template-columns:1fr 1fr;gap:16px}#login .login-hero{padding:34px 26px;min-height:0}#login .login-card{padding:30px 24px}.topic-strip{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:700px){.topbar-inner{padding:0 16px;height:68px}.container{padding:20px 14px 44px}#login .login-wrap{grid-template-columns:1fr;max-width:520px;margin:0 auto}#login .login-hero{padding:28px 26px;min-height:0}#login .login-hero h1{font-size:48px;margin:12px 0}#login .login-roles{display:none}#login .login-card{padding:28px 22px}.hero{padding:30px 22px}.stats{gap:10px}.info-card,.step-card{padding:18px}}
+@media(max-width:480px){.brand-text{font-size:13px}.brand-text small{display:none}.top-actions{gap:5px}.icon-btn{flex-shrink:0}.home-grid,.topic-strip,.test-grid,.team-grid{grid-template-columns:1fr}.role-tabs{gap:6px}#login .role-tab{min-height:83px;font-size:12px;padding:9px 3px}#login .login-card h2{font-size:25px}.question-card{padding:24px 20px}.two-col{grid-template-columns:1fr}.stats{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;scroll-behavior:auto!important}}
